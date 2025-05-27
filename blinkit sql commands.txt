@@ -1,0 +1,68 @@
+﻿select * from grocery;
+
+
+select distinct(item_fat_content) from grocery; 
+
+
+update grocery
+set item_fat_content= 'Regular' where 
+item_fat_content='reg';
+
+
+update grocery
+set item_fat_content= 'Low Fat' where 
+item_fat_content='LF';
+
+
+/*Total Revenue generated from all items sold*/
+select sum(sales) as Total_Revenue from grocery;
+
+
+/*Average Revenue per sale*/
+select avg(sales) as Avg_Sales from grocery;
+
+
+ /*Total Count of different items sold*/
+ select count(*) as No_of_Items from grocery;
+ 
+ /*Average Customer Rating*/
+ select avg(Rating) as Avg_Rating from grocery;
+ 
+ /*Total Sales by Fat Content*/
+ Select Item_Fat_Content, Sum(Sales) as Total_Sales,
+ avg(sales) as Avg_Sales,
+ count(*) as No_of_Items,
+ avg(Rating) as Avg_Rating 
+ from Grocery Group by Item_Fat_Content ;
+ 
+ 
+ /*Total Sales by Item Type*/
+ Select Item_Type, Sum(Sales) as Total_Sales,
+  avg(sales) as Avg_Sales,
+ count(*) as No_of_Items,
+ avg(Rating) as Avg_Rating 
+ from Grocery Group by Item_Type ;
+ 
+  /*Total Sales by Fat Content per Outlet*/
+ Select Outlet_Identifier, Item_Fat_Content, Sum(Sales) as Total_Sales,
+  avg(sales) as Avg_Sales,
+ count(*) as No_of_Items,
+ avg(Rating) as Avg_Rating 
+ From Grocery group by Outlet_Identifier, Item_Fat_Content 
+ order by Outlet_Identifier;
+ 
+  /*Total Sales by Outlet Type*/
+ Select Outlet_Type, Sum(Sales) as Total_Sales,
+  avg(sales) as Avg_Sales,
+ count(*) as No_of_Items,
+ avg(Rating) as Avg_Rating 
+ From Grocery group by Outlet_Type;
+ 
+  /*Percentage Sales by Outlet Size*/ 
+ Select Outlet_Size, sum(Sales) as Total_Sales, 
+ ROUND(100.00 * sum(Sales)/(Sum(Sum(Sales)) Over()),2) as Sales_Share_Percent,
+  avg(sales) as Avg_Sales,
+ count(*) as No_of_Items,
+ avg(Rating) as Avg_Rating 
+ From grocery
+ group by Outlet_Size;
